@@ -4,4 +4,8 @@
 # Ignore virtual environment directories
 venv/*
 
+# Ignore environment file
 .env
+
+#ignore any .mp3 files
+*.mp3

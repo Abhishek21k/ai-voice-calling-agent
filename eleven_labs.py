@@ -1,5 +1,5 @@
 
-from elevenlabs import play
+from elevenlabs import play, save
 from elevenlabs.client import ElevenLabs
 
 import os
@@ -17,4 +17,6 @@ audio = client.generate(
     voice="Rachel",
     model="eleven_multilingual_v2"
 )
-play(audio)
+
+
+save(audio, "hello.mp3")
