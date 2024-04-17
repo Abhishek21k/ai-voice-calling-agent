@@ -5,4 +5,5 @@ langchain_core
 elevenlabs
 deepgram-sdk
 PyAudio
-
+twilio
+vonage

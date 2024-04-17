@@ -14,17 +14,16 @@ from deepgram import (
 
 load_dotenv()
 
-# URL for the realtime streaming audio you would like to transcribe
-# URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 
 API_KEY = os.getenv("DG_API_KEY")
 
 
 async def transcripts():
     try:
+        text = []
         # STEP 1: Create a Deepgram client using the API key
 
-        deepgram: DeepgramClient = DeepgramClient()
+        deepgram: DeepgramClient = DeepgramClient(API_KEY)
         # STEP 2: Create a websocket connection to Deepgram
         dg_connection = deepgram.listen.live.v("1")
 
@@ -36,6 +35,7 @@ async def transcripts():
             if len(sentence) == 0:
                 return
 
+            text.append(sentence)
             print(f"speaker: {sentence}")
 
         def on_error(self, error, **kwargs):
@@ -54,10 +54,9 @@ async def transcripts():
             channels=1,
             sample_rate=16000,
             numerals=True,
-            # To get UtteranceEnd, the following must be set:
-            interim_results=True,
-            utterance_end_ms="1000",
-            vad_events=True,
+            endpointing=True,
+
+
         )
 
         # STEP 6: Start the connection
@@ -78,7 +77,8 @@ async def transcripts():
         # STEP 13: Close the connection to Deepgram
         dg_connection.finish()
 
-        print("Finished")
+        print("\nFinished")
+        print("\nTEXT:\n", text)
 
     except Exception as e:
         print(f"Could not open socket: {e}")

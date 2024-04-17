@@ -9,3 +9,6 @@ venv/*
 
 #ignore any .mp3 files
 *.mp3
+
+#ignore any .wav files
+*.wav
